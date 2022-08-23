@@ -1,10 +1,10 @@
 .table {
   font-size: 12px;
   width: 100%;
-  &-row {
+
+  &-header, &-row {
     display: flex;
     justify-content: flex-start;
-    
   }
 
   &-column {
@@ -12,11 +12,9 @@
     min-width: 200px;
   }
 
-  .header {
-    color: red($color: #4646f6);
+  &-header {
+    color: #4646f6;
     font-weight: 500;
-    font-size: 14px;
-
-    
+    font-size: 14px;    
   }
 }
