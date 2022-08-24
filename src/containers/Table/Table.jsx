@@ -29,6 +29,7 @@ function Table(props) {
   const handleHero = (hero) => {
     setCurrentHero(hero)
   }
+
   const heroes = !filterClass || filterClass === 'all'
     ? heroesRaw 
     : heroesRaw.filter(hero => hero.class === filterClass);
@@ -38,6 +39,7 @@ function Table(props) {
   return (
     <div className="table">
       <h1>Heroes</h1>
+
       <div className="table-filters">
         <Select 
           name="filter-class" 
@@ -51,13 +53,15 @@ function Table(props) {
         <HeroDetails currentHero={currentHero}/>
       }
     
+      {/* Table Header */}
       <TableRow 
         hero={tableHeader}
         className="table-header"
       />
 
       {heroes.map((hero) => (
-        <TableRow 
+        <TableRow
+          key={hero.name}
           hero={hero}
           className="table-row"
           onClick={() => handleHero(hero)}
