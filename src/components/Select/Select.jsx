@@ -1,6 +1,6 @@
 import React from "react";
 
-function Select({name, label, options, selected, onSelect}) {
+function Select({name, label, options, onSelect}) {
   return (
     <>
       <label htmlFor={name}>{label}</label>

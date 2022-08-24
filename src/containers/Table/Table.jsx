@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Select from '../../components/Select/Select';
+import HeroDetails from '../HeroDetails/HeroDetails';
 import './Table.scss';
+import TableRow from './TableRow';
 
 function Table(props) {
   const [filterClass, setFilterClass] = useState();
@@ -31,6 +33,8 @@ function Table(props) {
     ? heroesRaw 
     : heroesRaw.filter(hero => hero.class === filterClass);
 
+  const tableHeader = {name: 'Name', hp: 'Hit Points', class: 'Class'}
+
   return (
     <div className="table">
       <h1>Heroes</h1>
@@ -44,25 +48,20 @@ function Table(props) {
       </div>
 
       {currentHero && 
-        <div>
-          <h2>DETAILS: {currentHero.name}</h2>
-          Hero Class: {currentHero.class}
-          {currentHero.skills && <div>SKILLS: {currentHero.skills.join(', ')}</div>}
-        </div>
+        <HeroDetails currentHero={currentHero}/>
       }
-
-      <div className="table-header">
-        <div className="table-column">Name</div>
-        <div className="table-column">Hit Points</div>
-        <div className="table-column">Class</div>
-      </div>
+    
+      <TableRow 
+        hero={tableHeader}
+        className="table-header"
+      />
 
       {heroes.map((hero) => (
-        <div key={hero.name} className="table-row" onClick={() => handleHero(hero)}>
-          <div className="table-column">{hero.name}</div>
-          <div className="table-column">{hero.hp}</div>
-          <div className="table-column">{hero.class}</div>
-        </div>
+        <TableRow 
+          hero={hero}
+          className="table-row"
+          onClick={() => handleHero(hero)}
+        />
       ))}
     </div>
   )

@@ -5,6 +5,15 @@
   &-header, &-row {
     display: flex;
     justify-content: flex-start;
+    
+  }
+
+  &-row {
+    cursor: pointer;
+  }
+
+  &-row:hover {
+    background-color: #a1a1f7;
   }
 
   &-column {
