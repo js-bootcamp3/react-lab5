@@ -19,9 +19,8 @@ function TeamDetails() {
       const response = await axios.get(url, requestOptions)
       setDetails(response.data.response[0])  
     } catch (error) {
-      alert('error', error)  
+      console.error('error', error)  
     }
-    
   }
 
   console.log('details', details)

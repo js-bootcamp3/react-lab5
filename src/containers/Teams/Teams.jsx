@@ -7,19 +7,27 @@ import './Teams.scss'
 function Teams(props) {
   const [standings, setStandings] = useState([])
   const [league, setLeague] = useState()
+  const [loading, setLoading] = useState();
+  const [error, setError] = useState(null)
   
-
   useEffect(() => {
     fetchTeams()
   }, [])
 
   const fetchTeams = async () =>  {
+    setLoading(true)
     const url = `${BASE_URL}/standings?league=39&season=2019`    
 
     try {
       const response = await axios.get(url, requestOptions);
-      const league = response.data.response[0].league;
+      
+      if (response.data.errors) {
+        setError(response.data.errors)
+        setLoading(false)
+        return
+      } 
 
+      const league = response.data.response[0].league;
       const data = {
         country: league.country,
         flag: league.flag,
@@ -31,6 +39,8 @@ function Teams(props) {
       setStandings(league.standings[0])
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -38,7 +48,12 @@ function Teams(props) {
 
   }
 
-  if (!league) return 'Loading...'
+
+  if (error) return (
+    <div>{error.requests || error.rateLimit}</div>
+  )
+
+  if (loading || !league || !error) return 'Loading...'
 
   return (
     <div>
