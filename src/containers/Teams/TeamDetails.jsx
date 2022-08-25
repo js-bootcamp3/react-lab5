@@ -14,9 +14,14 @@ function TeamDetails() {
   }, [])
 
   const fetchTeam = async () => {
-    const url = `${BASE_URL}/teams?id=${id}`
-    const response = await axios.get(url, requestOptions)
-    setDetails(response.data.response[0])
+    try {
+      const url = `${BASE_URL}/teams?id=${id}`
+      const response = await axios.get(url, requestOptions)
+      setDetails(response.data.response[0])  
+    } catch (error) {
+      alert('error', error)  
+    }
+    
   }
 
   console.log('details', details)
