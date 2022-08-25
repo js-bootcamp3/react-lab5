@@ -1,35 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+import { BASE_URL, requestOptions } from '../../constants/api';
 import './Teams.scss'
-const URL = "https://v3.football.api-sports.io/standings?league=39&season=2019"
 
 function Teams(props) {
   const [standings, setStandings] = useState([])
   const [league, setLeague] = useState()
-  const [currentTeam, setCurrentTeam] = useState(null)
+  
 
   useEffect(() => {
     fetchTeams()
   }, [])
 
-  useEffect(() => {
-    // fetchTeam(currentTeam)
-    console.log('current', currentTeam)
-    // setCurrentTeam({})
-  }, [currentTeam])
-
   const fetchTeams = async () =>  {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "x-rapidapi-key": "",
-        "x-rapidapi-host": "v3.football.api-sports.io"
-      },
-      redirect: "follow",
-    };
+    const url = `${BASE_URL}/standings?league=39&season=2019`    
 
     try {
-      const response = await axios.get(URL, requestOptions);
+      const response = await axios.get(url, requestOptions);
       const league = response.data.response[0].league;
 
       const data = {
@@ -47,7 +35,7 @@ function Teams(props) {
   }
 
   const handleClickTeam = (team) => {
-    setCurrentTeam(team)
+
   }
 
   if (!league) return 'Loading...'
@@ -63,10 +51,10 @@ function Teams(props) {
       <div className="standings">
         {standings.map((item) => {
           return (
-            <div
+            <Link
+              to={`/teams/${item.team.id}`}
               key={item.rank} 
               className="standings-item" 
-              onClick={() => handleClickTeam(item.team)}
             >
               <div>{item.rank}</div>
               <div>
@@ -74,7 +62,7 @@ function Teams(props) {
               </div>
               <div>{item.team.name}</div>
               
-            </div>
+            </Link>
           )
         })}
       </div>
